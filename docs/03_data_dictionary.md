@@ -1,0 +1,23 @@
+# NHS Outpatient Referral Data Dictionary
+
+## Purpose
+
+This document describes the source dataset used in the NHS Outpatient Referral Data Pipeline project.
+
+It provides the business meaning, data type, and role of each source column. This document serves as the reference for database design, ETL development, and data validation.
+
+| Source Column                                    | Source Data Type | Business Description                                                                                                                        | Role                                                              | Nullable | Validation Rules                                                        | Target Table              |
+| ------------------------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | -------- | ----------------------------------------------------------------------- | ------------------------- |
+| Periodname                                       | String           | Reporting period for aggregated outpatient referral activity                                                                                | Part of the candidate composite business key                      | No       | Must not be null; valid reporting period format                         | dim_reporting_period      |
+| Provider Org code                                | String           | Unique code assigned to the NHS provider organisation responsible for delivering the outpatient service                                     | Part of the candidate composite business key; business identifier | No       | Must not be null; must follow the expected NHS organisation code format | dim_provider              |
+| Provider Name                                    | String           | Name of the NHS provider organisation responsible for delivering the outpatient service                                                     | Descriptive attribute                                             | No       | Must not be null                                                        | dim_provider              |
+| Commissioner Org Code                            | String           | Unique code assigned to the NHS commissioner organisation responsible for commissioning the outpatient service                              | Part of the candidate composite business key; business identifier | No       | Must not be null; must follow the expected NHS organisation code format | dim_commisoner            |
+| Commisioner Name                                 | String           | Name of the NHS commissioner organisation responsible for funding and arranging the outpatient service                                      | Descriptive attribute                                             | No       | Must not be null                                                        | dim_commisioner           |
+| Op Gprefsmade M                                  | Integer          | Number of outpatient referrals made by General Practitioners (GPs) during the reporting period                                              | Business measure                                                  | No       | Must not be null; must be a non-negative integer                        | fact_outpatient_referrals |
+| Op Gprefsseen M                                  | Integer          | Number of GP outpatient referrals seen by the provider organisation during the reporting period.                                            | Business measure                                                  | No       |
+| Must not be null; must be a non-negative integer |
+| fact_outpatient_referrals                        |
+| Op Otherrefsmade M                               | Integer          | Number of outpatient referrals made from sources other than General Practitioners during the reporting period                               | Business measure                                                  | No       | Must not be null; must be a non-negative integer                        | fact_outpatient_referrals |
+| Op Otherrefsseen M                               | Integer          | Number of outpatient referrals from sources other than General Practitioners seen by the provider organisation during the reporting period. | Business measure                                                  | No       |
+| Must not be null; must be a non-negative integer |
+| fact_outpatient_referrals                        |
